@@ -18,28 +18,22 @@ I started by figuring out how the leds work. I used a Neopixel ws2812B with 144 
 
 [Here is the datasheet for the neopixel](https://d2j2m4p6r3pg95.cloudfront.net/module_files/led-cube/assets/datasheets/WS2812B.pdf), and [here is a guide of how to use them given out by their producer](https://components101.com/sites/default/files/component_datasheet/NeoPixel%20LEDs%20Datasheet.pdf). The key points that interest us from here are:
 
-	* the strip is working at 5V, and supports up to 5.5V
-
-	* each led should use 60mA at full brightness and with RGB set on (255, 255, 255). Basically, each color at full brightness needs 20mA.
-
-	* the wiring is pretty simple. One only needs to use the JST connector, and the colors are pretty self-explanatory, but anyways: ![here is a photo](./imgs/img1.HEIC) 
-
-	* it's recommended that one uses a resistance of 450-500 Ohms on the data line for protection reasons
-
-	* a 1000uF capacitor connected in paralel is also recommended, especially if you are using a source
+* the strip is working at 5V, and supports up to 5.5V
+* each led should use 60mA at full brightness and with RGB set on (255, 255, 255). Basically, each color at full brightness needs 20mA.
+* the wiring is pretty simple. One only needs to use the JST connector, and the colors are pretty self-explanatory, but anyways: ![here is a photo](./imgs/img1.HEIC) 
+* it's recommended that one uses a resistance of 450-500 Ohms on the data line for protection reasons
+* a 1000uF capacitor connected in paralel is also recommended, especially if you are using a source
 
 With all this knowledge I started on tinkering a very basic circuit, with the leds connected directly to the UNO R3 and also powered by it. The code used for testing them was a generic test found in the Adafruit guide and can be found [here.](./src/basics/basic_test/basic_test.ino)
 
 I only showed one color at around 25% brightness, so I expected my leds to need around 5mA / led. In reality when I set my code to light up all my 144 leds in red / green / blue it only managed to light half of them, so this means that they needed around 7 mA / led.(based on the fact that Arduino provides around 500 mA through its 5V pin.) The brightness was good for me and I wouldn't expect to go further than 50%. So this means that each led shoul need a max of 30 mA, and the whole strip shouldn't need more than 4,5 mA. But even this is a pretty extreme case, so I think that for our needs anything between 2-3 A would be a good source.
 
 Now that I know how my leds work and how much power they need, I can move to the IR receiver, which will help me control them from a remote. I bought a TSOP38238. From it's [datasheet](https://www.sparkfun.com/products/10266) we extract the following important characteristics: 
-	* it requires 2.5 - 5.5 V
 
-	* it needs 350µA (so basically negligible)
-
-	* signal frequency: 38kHz
-
-	* detection up to 45m (I will never use it for more than a couple meters, so I don't really care about this) 
+* it requires 2.5 - 5.5 V
+* it needs 350µA (so basically negligible)
+* signal frequency: 38kHz
+* detection up to 45m (I will never use it for more than a couple meters, so I don't really care about this) 
 
 The wiring is shown here: ![in this picture](./imgs/ir_wiring.HEIC). I tested this receiver with the most basic code one can write with the IRremote library. You can find it [here](./src/basics/basic_ir_test/basic_ir_test.ino). I also connected a small red led for which the "CH" button acts as a switch. ![real wiring](./imgs/ir_led_wiring.HEIC) ![schematic]() !TODO
 
