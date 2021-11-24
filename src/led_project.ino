@@ -4,27 +4,27 @@
 
 #include <IRremote.h>
 
-#define CHm 0xBA45FF00
-#define CH 0xB946FF00
-#define CHp 0xB847FF00
-#define back 0xBB44FF00
-#define forward 0xBF40FF00
-#define playpause 0xBC43FF00
-#define minus 0xF807FF00
-#define plus 0xEA15FF00
-#define eq 0xF609FF00
-#define zero 0xE916FF00
-#define oneh 0xE619FF00
-#define twoh 0xF20DFF00
-#define one 0xF30CFF00
-#define two 0xE718FF00
-#define three 0xA15EFF00
-#define four 0xF708FF00
-#define five 0xE31CFF00
-#define six 0xA55AFF00
-#define seven 0xBD42FF00
-#define eight 0xAD52FF00
-#define nine 0xB54AFF00
+#define CHm 		0xBA45FF00
+#define CH 		0xB946FF00
+#define CHp 		0xB847FF00
+#define back 		0xBB44FF00
+#define forward 	0xBF40FF00
+#define playpause 	0xBC43FF00
+#define minus 		0xF807FF00
+#define plus 		0xEA15FF00
+#define eq 		0xF609FF00
+#define zero 		0xE916FF00
+#define oneh 		0xE619FF00
+#define twoh 		0xF20DFF00
+#define one 		0xF30CFF00
+#define two 		0xE718FF00
+#define three 		0xA15EFF00
+#define four 		0xF708FF00
+#define five 		0xE31CFF00
+#define six 		0xA55AFF00
+#define seven 		0xBD42FF00
+#define eight 		0xAD52FF00
+#define nine 		0xB54AFF00
 
 // pin connected to the data line from the receiver
 const int receiver_pin = 11;
