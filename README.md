@@ -28,7 +28,7 @@ With all this knowledge I started on tinkering a very basic circuit, with the le
 
 I only showed one color at around 25% brightness, so I expected my leds to need around 5mA / led. In reality when I set my code to light up all my 144 leds in red / green / blue it only managed to light half of them, so this means that they needed around 7 mA / led.(based on the fact that Arduino provides around 500 mA through its 5V pin.) The brightness was good for me and I wouldn't expect to go further than 50%. So this means that each led shoul need a max of 30 mA, and the whole strip shouldn't need more than 4,5 mA. But even this is a pretty extreme case, so I think that for our needs anything between 2-3 A would be a good source.
 
-Now that I know how my leds work and how much power they need, I can move to the IR receiver, which will help me control them from a remote. I bought a TSOP38238. From it's [datasheet](https://www.sparkfun.com/products/10266) we extract the following important characteristics: 
+Now that I know how my leds work and how much power they need, I can move to the IR receiver, which will help me control them from a remote. I bought a TSOP38238. From it's [datasheet](https://www.sparkfun.com/datasheets/Sensors/Infrared/tsop382.pdf) we extract the following important characteristics: 
 
 * it requires 2.5 - 5.5 V
 * it needs 350µA (so basically negligible)
