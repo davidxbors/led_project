@@ -47,8 +47,12 @@ I could search up for a new power supply, and for a new charger for that matter,
 
 So I started decoding what all the codes for my buttons are, by using the code provided in ./basics/. Using it I also saw what protocol is the remote using, so I can ignore any other protocol. So I began writting the actual code, by first creating a switch case that would react to every button. Now it's time to also wire the led strip and start making the magic!
 
+Here are two pictures of the wiring I used:
+![real_pic](./imgs/ir_led_strip_wiring.jpg)
+!TODO add schematic ![schematic]()
 
-!TODO -> to be continued
+I won't go in detail with the code as I believe the two libraries I used are quite well documented (and with self-explanatory function names) and my code is explained in comments.
+
 
 ## Usage
 
