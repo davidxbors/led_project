@@ -5,7 +5,7 @@
 #include <IRremote.h>
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-  #include <avr/power.h>
+#include <avr/power.h>
 #endif
 
 /* remote mapping */
@@ -81,7 +81,7 @@ void inc_bright ()
 	if ((brightness <= (int)(.20 * 255)))
 		brightness += (int)(.05 * 255);	
 	strip.setBrightness(brightness);
-  strip.show();
+  	strip.show();
 }
 
 /*
@@ -108,6 +108,97 @@ void light_strip (uint32_t color, int __delay)
 		strip.show();
 		delay(__delay);
 	}
+}
+
+
+/* rainbow cycle along the strip */
+/* _delay -> delay time between frames */
+void rainbow (int _delay) 
+{
+  /* Hue of first pixel runs 5 complete loops through the color wheel. */
+  /* Color wheel has a range of 65536 but it's OK if we roll over, so */
+  /* just count from 0 to 5*65536. Adding 256 to firstPixelHue each time */
+  /* means we'll make 5*65536/256 = 1280 passes through this outer loop: */
+  for(long firstPixelHue = 0; firstPixelHue < 5*65536; firstPixelHue += 256) {
+    for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+      /* Offset pixel hue by an amount to make one full revolution of the */
+      /* color wheel (range of 65536) along the length of the strip */
+      /* (strip.numPixels() steps): */
+      int pixelHue = firstPixelHue + (i * 65536L / strip.numPixels());
+      /* strip.ColorHSV() can take 1 or 3 arguments: a hue (0 to 65535) or */
+      /* optionally add saturation and value (brightness) (each 0 to 255). */
+      /* Here we're using just the single-argument hue variant. The result */
+      /* is passed through strip.gamma32() to provide 'truer' colors */
+      /* before assigning to each pixel: */
+      strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(pixelHue)));
+    }
+    strip.show(); 
+    delay(_delay); 
+  }
+}
+
+void _christmas_1 (void)
+{
+	strip.clear();
+	/* initial wiping of the strip */
+	uint32_t colors[3] = {strip.Color(255, 0, 0), strip.Color(0, 255, 0), strip.Color(255, 255, 255)};
+	for (int i = 0; i < strip.numPixels(); i += _step) {
+		strip.setPixelColor(i, colors[i % 3]);
+		strip.show();
+		delay(50);				
+	}
+	/* pulsing the lights */
+	for (int i = .05; i < .25; i += .05) {
+		strip.setBrightness(i * 255);
+		strip.show();
+		delay(25);	
+	}
+	for (int i = .25; i >= .05; i -= .05) {
+		strip.setBrightness(i * 255);
+		strip.show();
+		delay(25);
+	}
+	for (int i = .05; i < (brightness / 255); i += .05) {
+		strip.setBrightness(i * 255);
+		strip.show();
+		delay(25);
+	}
+	/* theather chase effect */
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 3; j++) {
+			strip.clear();
+			for (int k = j; k < strip.numPixels(); k += 3) {
+				strip.setPixelColor(k, colors[k % 3]);
+			}
+			strip.show();
+			delay(50);
+		}
+	}
+	/* end with another color wipe */
+	strip.clear();
+	for (int i = 0; i < strip.numPixels(); i += _step) {
+		strip.setPixelColor(i, colors[i % 3]);
+		strip.show();
+		delay(50);				
+  	}
+}
+
+/* second christmas effect; basically a slow theather chase */
+void _christmas_2 (void)
+{
+	strip.clear();
+	uint32_t colors[3] = {strip.Color(255, 0, 0), strip.Color(0, 255, 0), strip.Color(255, 255, 255)};
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 3; j++) {
+			strip.clear();
+			for (int k = j; k < strip.numPixels(); k += 3) {
+				strip.setPixelColor(k, colors[k % 3]);
+			}
+			strip.show();
+			/* TODO check if wait time is enough */
+			delay(500);
+		}
+  	}
 }
 
 /* basic arduino functions */
@@ -160,23 +251,33 @@ void loop ()
 			Serial.println("eq");
 			break;
 		case zero:
-			Serial.println("zero");
+			/* red */
+			curr_color = strip.Color(255, 0, 0);
+			light_strip(curr_color, 50);
 			break;
 		case oneh:
-			Serial.println("oneh");
+			/* green */
+			curr_color = strip.Color(0, 255, 0);
+			light_strip(curr_color, 50);
 			break;
 		case twoh:
-			Serial.println("twoh");
+			/* blue */
+			curr_color = strip.Color(0, 0, 255);
+			light_strip(curr_color, 50);
 			break;
 		case one:
-			Serial.println("one");
+			/* effect 1 -> rainbow */
+			rainbow(10);
 			break;
 		case two:
-			Serial.println("two");
+			/* effect 2 -> christmas 1 */
+			_christmas_1();
 			break;
 		case three:
-			Serial.println("three");
+			/* effect 3 -> christmas 2 */
+			_christmas_2();
 			break;
+		/* TODO find usage for these buttons too */
 		case four:
 			Serial.println("four");
 			break;
