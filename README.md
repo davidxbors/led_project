@@ -53,8 +53,18 @@ Here are two pictures of the wiring I used:
 
 I won't go in detail with the code as I believe the two libraries I used are quite well documented (and with self-explanatory function names) and my code is explained in comments.
 
+And that's the end of the journey! If you take a look at the code you'll see that I also added 2 holiday effects.
+
 
 ## Usage
 
-!TODO - last -
-
+* CH - -> dims the brightness
+* CH + -> increases the brightness
+* CH   -> starts the leds and stops them
+* PREV -> sets how many leds will be on at a given time (see code comments for more details)
+* ZERO -> sets leds to color red
+* ONEH -> sets leds to color green
+* TWOH -> sets leds to color blue
+* ONE  -> sets rainbow mode on
+* TWO  -> sets christmas effect 1
+* THREE-> sets christmas effect 2

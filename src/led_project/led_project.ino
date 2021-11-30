@@ -32,7 +32,7 @@
 #define nine 		0xB54AFF00
 
 /* led constants */
-#define LED_COUNT 144
+#define LED_COUNT 288
 
 // pin connected to the data line from the receiver
 const int receiver_pin = 11;
@@ -148,32 +148,51 @@ void _christmas_1 (void)
 		delay(50);				
 	}
 	/* pulsing the lights */
-	for (int i = .05; i < .25; i += .05) {
-		strip.setBrightness(i * 255);
-		strip.show();
-		delay(25);	
+	for (char i = 15; i < 65; i += 5) {
+	  strip.setBrightness(i);
+	  strip.show();
+	  delay(500);
 	}
-	for (int i = .25; i >= .05; i -= .05) {
-		strip.setBrightness(i * 255);
-		strip.show();
-		delay(25);
+	for (char i = 65; i >= 15; i -= 5) {
+	  strip.setBrightness(i);
+	  strip.show();
+	  delay(500);
 	}
-	for (int i = .05; i < (brightness / 255); i += .05) {
-		strip.setBrightness(i * 255);
-		strip.show();
-		delay(25);
+	for (char i = 15; i <= brightness; i += 5) {
+	  strip.setBrightness(i);
+	  strip.show();
+	  delay(500);
 	}
+	strip.setBrightness(brightness);
+
 	/* theather chase effect */
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 3; j++) {
 			strip.clear();
 			for (int k = j; k < strip.numPixels(); k += 3) {
 				strip.setPixelColor(k, colors[k % 3]);
 			}
 			strip.show();
-			delay(50);
+			delay(1000);
 		}
 	}
+
+	/* theather chase effect 2 */
+	for (int a = 0; a < 10; a++) {  // Repeat 10 times...
+	  for (int b=0; b < 3; b++) { //  'b' counts from 0 to 2...
+	    strip.clear();         //   Set all pixels in RAM to 0 (off)
+	    // 'c' counts up from 'b' to end of strip in steps of 3...
+	    int k = 0;
+	    for (int c=b; c < strip.numPixels(); c += 3) {
+	      strip.setPixelColor(c, colors[k%3]); // Set pixel 'c' to value 'color'
+	      k++;
+	    }
+	    strip.show(); // Update strip with new contents
+	    delay(500);  // Pause for a moment
+	  }
+	}
+
+	
 	/* end with another color wipe */
 	strip.clear();
 	for (int i = 0; i < strip.numPixels(); i += _step) {
@@ -181,6 +200,7 @@ void _christmas_1 (void)
 		strip.show();
 		delay(50);				
   	}
+
 }
 
 /* second christmas effect; basically a slow theather chase */
@@ -188,17 +208,19 @@ void _christmas_2 (void)
 {
 	strip.clear();
 	uint32_t colors[3] = {strip.Color(255, 0, 0), strip.Color(0, 255, 0), strip.Color(255, 255, 255)};
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 3; j++) {
-			strip.clear();
-			for (int k = j; k < strip.numPixels(); k += 3) {
-				strip.setPixelColor(k, colors[k % 3]);
-			}
-			strip.show();
-			/* TODO check if wait time is enough */
-			delay(500);
-		}
-  	}
+	for (int a = 0; a < 10; a++) {  // Repeat 10 times...
+	  for (int b=0; b < 3; b++) { //  'b' counts from 0 to 2...
+	    strip.clear();         //   Set all pixels in RAM to 0 (off)
+	    // 'c' counts up from 'b' to end of strip in steps of 3...
+	    int k = 0;
+	    for (int c=b; c < strip.numPixels(); c += 3) {
+	      strip.setPixelColor(c, colors[k%3]); // Set pixel 'c' to value 'color'
+	      k++;
+	    }
+	    strip.show(); // Update strip with new contents
+	    delay(500);  // Pause for a moment
+	  }
+	}
 }
 
 /* basic arduino functions */
