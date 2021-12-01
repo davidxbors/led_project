@@ -6,15 +6,22 @@ Seeing how having leds in your room has become a whole trend, I decided to hop o
 
 ### Components
 
-Components that I used to make this project. !TODO
+1x Arduino UNO R3
+1x NeoPixel WS2812B strip
+2x 1k Ohm Resistors (actually you can use any resistors as long their equivalent resistance will be ~480 Ohms in the end)
+1x TSOP38238 IR Receiver
+1x IR Remote (I don't know my model as I received it with a kit)
+10x jump wires (I like using more wires for modularity, but you can get away with less)
 
 ### Schematics 
 
-Final Schematics  -> photo of the whole wiring + schematic of the whole wiring
+![real_pic](./imgs/ir_led_strip_wiring.jpg)
 
 ### Story
 
-I started by figuring out how the leds work. I used a Neopixel ws2812B with 144 leds for this project. Any other Neopixel ws2812B strip should be similar, but of course your current needs will be different, and also your code will need a little tweaking for changing the no. leds that it must control. 
+You will read about how my leds couldn't be powered fully using the standard Arduino usb cable. This is a mistake, and as long as you won't use all the leds or very consuming (in regards to current) colors this shouldn't be a problem. My problem was not knowing how many leds I actually have (it wrote 144 on the wheel the leds came on, but there were actually more, so of course that not the whole strip was powered when my code was limiting the power to only 144 leds...) Anyways, I discovered this while doing the final adjustments on my code so I tought I should add it here.
+
+I started by figuring out how the leds work. I used a Neopixel WS2812B with 144 leds for this project. Any other Neopixel ws2812B strip should be similar, but of course your current needs will be different, and also your code will need a little tweaking for changing the no. leds that it must control. 
 
 [Here is the datasheet for the neopixel](https://d2j2m4p6r3pg95.cloudfront.net/module_files/led-cube/assets/datasheets/WS2812B.pdf), and [here is a guide of how to use them given out by their producer](https://components101.com/sites/default/files/component_datasheet/NeoPixel%20LEDs%20Datasheet.pdf). The key points that interest us from here are:
 
@@ -49,7 +56,6 @@ So I started decoding what all the codes for my buttons are, by using the code p
 
 Here are two pictures of the wiring I used:
 ![real_pic](./imgs/ir_led_strip_wiring.jpg)
-!TODO add schematic ![schematic]()
 
 I won't go in detail with the code as I believe the two libraries I used are quite well documented (and with self-explanatory function names) and my code is explained in comments.
 
